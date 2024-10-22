@@ -4,18 +4,19 @@ import axios from 'axios';
 function App() {
   const [number, setNumber] = useState(0);
 
+  const apiUrl = import.meta.env.VITE_API_URL; // Correct way to access env vars in Vite
   // Fetch the number from the backend when the app loads
   useEffect(() => {
-    axios.get('http://localhost:5000/number')
+    axios.get(`${apiUrl}/number`)
       .then(response => {
         setNumber(response.data.num);
       })
       .catch(error => console.error('Error fetching the number:', error));
-  }, []);
+  }, [apiUrl]);
 
   // Increment the number
   const incrementNumber = () => {
-    axios.post('http://localhost:5000/increment')
+    axios.post(`${apiUrl}/increment`)
       .then(() => {
         setNumber(prevNumber => prevNumber + 1);
       })
@@ -24,7 +25,7 @@ function App() {
 
   // Decrement the number
   const decrementNumber = () => {
-    axios.post('http://localhost:5000/decrement')
+    axios.post(`${apiUrl}/decrement`)
       .then(() => {
         setNumber(prevNumber => prevNumber - 1);
       })
